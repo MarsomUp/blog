@@ -24,4 +24,17 @@ public interface IUserService {
      * @return
      */
     User getByLoginName(String loginName);
+
+    /**
+     * 禁用人员
+     * @param id
+     */
+    void disableUser(Long id);
+
+    /**
+     * 根据ID获取用户
+     * @param id
+     * @return
+     */
+    User getById(Long id);
 }

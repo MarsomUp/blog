@@ -2,11 +2,17 @@ package com.immyc.blog.admin.service.impl;
 
 import com.immyc.blog.admin.dao.UserMapper;
 import com.immyc.blog.admin.model.User;
+import com.immyc.blog.admin.model.UserRole;
+import com.immyc.blog.admin.service.IUserRoleService;
 import com.immyc.blog.admin.service.IUserService;
 import com.immyc.blog.common.IdGen;
+import com.immyc.blog.common.exception.BusinessException;
 import com.immyc.blog.common.util.PwdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -15,6 +21,8 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
     @Autowired
     private PwdUtil pwdUtil;
+    @Autowired
+    private IUserRoleService userRoleService;
 
     @Override
     public void addUser(User user) {
@@ -38,6 +46,23 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User getByLoginName(String loginName) {
-        return null;
+        return this.userMapper.getByLoginName(loginName);
     }
+
+    @Override
+    public void disableUser(Long id) {
+        User user = getById(id);
+        if (user == null) {
+            throw new BusinessException();
+        }
+        user.setIsDeleted(true);
+        user.setUpdateTime(System.currentTimeMillis());
+    }
+
+    public User getById(Long id) {
+        return this.userMapper.getById(id);
+    }
+
+
+
 }

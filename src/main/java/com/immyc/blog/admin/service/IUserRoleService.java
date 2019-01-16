@@ -19,4 +19,32 @@ public interface IUserRoleService {
      * @return
      */
     List<Role> findUserRolesById(Long id);
+
+    /**
+     * 批量给用户授予角色
+     * @param userRoles
+     */
+    void addUserRolePatch(List<UserRole> userRoles);
+
+    /**
+     * 取消给用户授予的角色
+     * @param userRoleIds
+     */
+    void delUserRolePatch(Long[] userRoleIds);
+
+    /**
+     * 给用户授予角色
+     * @param userId
+     * @param roleIds
+     */
+    void addRoleToUser(Long userId, Long[] roleIds);
+
+    /**
+     * 根据角色获取角色权限关系表数据
+     * @param roleId
+     * @return
+     */
+    List<UserRole> findUserRoleByRoleId(Long roleId);
+
+
 }

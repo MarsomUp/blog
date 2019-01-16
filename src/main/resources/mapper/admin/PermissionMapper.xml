@@ -30,4 +30,17 @@
     create_time, is_deleted
     from sys_permission
   </select>
+  
+  <update id="updatePermission" parameterType="com.immyc.blog.admin.model.Permission">
+    update sys_permission
+    <set>
+      <if test="name != null and name != ''">name = #{name},</if>
+      <if test="url != null and url != ''">url = #{url},</if>
+      <if test="description != null and description != ''">description = #{description},</if>
+      <if test="icon != null and icon != ''">icon = #{icon},</if>
+      <if test="isDeleted != null and isDeleted != ''">is_deleted = #{isDeleted}</if>
+      update_time = #{updateTime}
+      where id = #{id}
+    </set>
+  </update>
 </mapper>

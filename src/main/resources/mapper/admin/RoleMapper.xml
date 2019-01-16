@@ -23,4 +23,30 @@
     select id, name, role_code, description, sort, create_time, is_deleted, update_time
     from sys_role
   </select>
+
+  <update id="updateRole" parameterType="com.immyc.blog.admin.model.Role">
+    update sys_role
+    <if test="role.name != null and role.name != ''">
+      set name = #{role.name}
+    </if>
+    <if test="role.description != null and role.description != ''">
+      ,set description = #{role.description}
+    </if>
+    <if test="role.sort != null and role.sort != ''">
+      ,set sort = #{role.sort}
+    </if>
+    <if test="role.isDeleted != null and role.isDeleted != ''">
+      ,set is_deleted = #{role.isDeleted}
+    </if>
+    ,set update_time = #{role.updateTime}
+    where id = #{role.id}
+  </update>
+
+  <delete id="deleteRole" parameterType="java.lang.Long">
+    delete from sys_role where id = ${id}
+  </delete>
+
+  <select id="maxRoleSort" resultType="java.lang.Integer">
+    select max(sort) from sys_role;
+  </select>
 </mapper>

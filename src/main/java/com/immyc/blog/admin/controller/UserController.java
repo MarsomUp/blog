@@ -29,6 +29,7 @@ public class UserController {
     @ResponseBody
     public Result disable(HttpServletRequest request) {
         String id = request.getParameter("id");
+        this.userService.disableUser(Long.valueOf(id));
         return Result.ok();
     }
 

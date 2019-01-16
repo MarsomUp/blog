@@ -17,4 +17,21 @@
     select id, role_id, permission_id, create_time
     from sys_role_permission
   </select>
+
+  <insert id="addRolePermPatch" parameterType="java.util.List">
+    insert into sys_role_permission (id, role_id, permission_id, create_time)
+    values
+    <foreach collection="list" item="item" index="index" open="" close="" separator=",">
+      (
+       #{item.id}, #{item.roleId}, #{item.permissionId}, #{item.createTime}
+      )
+    </foreach>
+  </insert>
+
+  <delete id="delRolePermPatch" parameterType="java.util.List">
+    delete from sys_role_permission where id in
+    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </delete>
 </mapper>
