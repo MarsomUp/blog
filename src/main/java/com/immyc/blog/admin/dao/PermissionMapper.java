@@ -20,4 +20,7 @@ public interface PermissionMapper {
     Permission getById(Long id);
 
     void updatePermission(Permission permission);
+
+    @Select("SELECT max(sort) FROM `sys_permission` where pid = #{pid}")
+    Integer maxPermSort(Long pid);
 }

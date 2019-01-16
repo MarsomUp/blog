@@ -28,6 +28,7 @@ public class LoginController {
     @Autowired
     private RedisUtil redisUtil;
 
+    @PostMapping("do")
     public Result login(HttpServletRequest request) {
         String loginName = request.getParameter("loginName");
         String pwd = request.getParameter("pwd");

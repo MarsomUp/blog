@@ -16,4 +16,10 @@ public interface IPermissionService {
      * @param realDelete
      */
     void deletePermission(Long id, Boolean realDelete);
+
+    /**
+     * 获取当前最大的排序号
+     * @return
+     */
+    int maxPermissionSort(Long pId);
 }

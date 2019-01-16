@@ -1,5 +1,7 @@
 package com.immyc.blog.admin.model;
 
+import java.util.Date;
+
 public class User {
     private Long id;
 
@@ -25,7 +27,7 @@ public class User {
 
     private Integer degree;
 
-    private Long birthday;
+    private Date birthday;
 
     private Integer gender;
 
@@ -125,11 +127,11 @@ public class User {
         this.degree = degree;
     }
 
-    public Long getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Long birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

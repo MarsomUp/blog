@@ -5,6 +5,7 @@ import com.immyc.blog.admin.model.Permission;
 import com.immyc.blog.admin.model.RolePermission;
 import com.immyc.blog.admin.service.IPermissionService;
 import com.immyc.blog.admin.service.IRolePermissionService;
+import com.immyc.blog.common.IdGen;
 import com.immyc.blog.common.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,11 @@ public class PermissionServiceImpl implements IPermissionService {
 
     @Override
     public void addPermission(Permission permission) {
+        permission.setId(IdGen.getId());
+        permission.setIsDeleted(false);
+        permission.setCreateTime(System.currentTimeMillis());
+        permission.setUpdateTime(System.currentTimeMillis());
+        permission.setSort(this.maxPermissionSort(permission.getPid()) + 1);
         this.permissionMapper.insert(permission);
     }
 
@@ -51,5 +57,11 @@ public class PermissionServiceImpl implements IPermissionService {
             rolePermissionService.delRolePerm(rpids);
         }
 
+    }
+
+    @Override
+    public int maxPermissionSort(Long pId) {
+        Integer maxSort = this.permissionMapper.maxPermSort(pId);
+        return maxSort == null ? 0 : maxSort;
     }
 }
