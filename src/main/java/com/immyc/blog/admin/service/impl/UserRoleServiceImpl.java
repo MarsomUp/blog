@@ -6,6 +6,8 @@ import com.immyc.blog.admin.model.UserRole;
 import com.immyc.blog.admin.service.IUserRoleService;
 import com.immyc.blog.common.IdGen;
 import com.immyc.blog.common.exception.BusinessException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.util.List;
 
 @Service
 public class UserRoleServiceImpl implements IUserRoleService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserRoleServiceImpl.class);
 
     @Autowired
     private UserRoleMapper userRoleMapper;

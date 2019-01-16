@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Controller
 @RequestMapping("user")
@@ -31,6 +32,12 @@ public class UserController {
         String id = request.getParameter("id");
         this.userService.disableUser(Long.valueOf(id));
         return Result.ok();
+    }
+
+    @PostMapping("findAllUser")
+    @ResponseBody
+    public Result findAllUser(User user, HttpServletRequest request) {
+        return null;
     }
 
 }
