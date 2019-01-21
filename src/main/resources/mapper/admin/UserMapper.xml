@@ -29,9 +29,35 @@
       #{createTime,jdbcType=BIGINT}, #{degree,jdbcType=INTEGER}, #{birthday,jdbcType=BIGINT}, 
       #{gender,jdbcType=INTEGER})
   </insert>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, user_name, login_account, pwd, salt, category, avatar, status, is_deleted, update_time,
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select id, user_name, login_account, category, avatar, status, is_deleted, update_time,
     create_time, degree, birthday, gender
     from sys_user
+    <where>
+      <trim prefixOverrides="and">
+        <if test="param.userName != null and param.userName != ''">
+          and user_name like concat('%', #{param.userName}, '%')
+        </if>
+        <if test="param.loginAccount != null and param.loginAccount != ''">
+          and login_account like concat('%', #{param.loginAccount}, '%')
+        </if>
+        <if test="param.category != null">
+          and category = #{param.category}
+        </if>
+        <if test="param.startTime != null">
+          and create_time &lt; #{param.startTime}
+        </if>
+        <if test="param.endTime != null">
+          and create_time &gt; #{param.endTime}
+        </if>
+        <if test="param.degree != null and param.degree != ''">
+          and degree = #{param.degree}
+        </if>
+        <if test="param.gender != null">
+          and gender = #{param.gender}
+        </if>
+      </trim>
+
+    </where>
   </select>
 </mapper>

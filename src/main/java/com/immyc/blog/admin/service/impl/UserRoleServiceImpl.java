@@ -28,8 +28,8 @@ public class UserRoleServiceImpl implements IUserRoleService {
     }
 
     @Override
-    public List<Role> findUserRolesById(Long id) {
-        return null;
+    public List<Role> findUserRolesByUserId(Long userId) {
+        return userRoleMapper.findUserRoleByUserId(userId);
     }
 
     @Override

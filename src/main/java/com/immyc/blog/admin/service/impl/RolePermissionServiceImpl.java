@@ -25,8 +25,8 @@ public class RolePermissionServiceImpl implements IRolePermissionService {
     }
 
     @Override
-    public List<Permission> findRolePermissionByRoleId(Long id) {
-        return null;
+    public List<Permission> findRolePermissionByRoleId(Long roleId) {
+        return rolePermissionMapper.findPermissionByRoleId(roleId);
     }
 
     @Override

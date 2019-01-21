@@ -50,6 +50,10 @@ public class Result implements Serializable {
         return new Result();
     }
 
+    public static Result ok(String msg) {
+        return new Result(msg);
+    }
+
     public static Result ok(Object data) {
         return new Result(data);
     }

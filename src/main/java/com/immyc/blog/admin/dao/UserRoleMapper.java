@@ -1,5 +1,6 @@
 package com.immyc.blog.admin.dao;
 
+import com.immyc.blog.admin.model.Role;
 import com.immyc.blog.admin.model.UserRole;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,6 @@ public interface UserRoleMapper {
 
     @Select("select * from sys_user_role where role_id = #{roleId}")
     List<UserRole> findUserRoleByRoleId(Long roleId);
+
+    List<Role> findUserRoleByUserId(Long userId);
 }
