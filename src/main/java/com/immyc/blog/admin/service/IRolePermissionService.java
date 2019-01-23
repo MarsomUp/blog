@@ -15,10 +15,10 @@ public interface IRolePermissionService {
 
     /**
      * 根据角色id获取角色权限
-     * @param id
+     * @param roleId
      * @return
      */
-    List<Permission> findRolePermissionByRoleId(Long id);
+    List<Permission> findRolePermissionByRoleId(Long roleId);
 
     /**
      * 批量给角色授予权限

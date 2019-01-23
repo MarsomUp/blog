@@ -1,5 +1,6 @@
 package com.immyc.blog.admin.dao;
 
+import com.immyc.blog.admin.model.Permission;
 import com.immyc.blog.admin.model.RolePermission;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,6 @@ public interface RolePermissionMapper {
 
     @Select("select * from sys_role_permission where permission_id = #{permissionId}")
     List<RolePermission> findByPermissionId(Long permissionId);
+
+    List<Permission> findPermissionByRoleId(Long roleId);
 }

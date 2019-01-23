@@ -34,4 +34,8 @@
       #{item}
     </foreach>
   </delete>
+
+  <select id="findUserRoleByUserId" resultType="com.immyc.blog.admin.model.Role">
+    select role.* from sys_role role left join sys_user_role u_role on role.id = u_role.role_id where u_role.user_id = #{userId}
+  </select>
 </mapper>

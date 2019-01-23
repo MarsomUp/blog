@@ -7,12 +7,16 @@ import com.immyc.blog.admin.model.UserRole;
 import com.immyc.blog.admin.service.IRolePermissionService;
 import com.immyc.blog.admin.service.IUserRoleService;
 import com.immyc.blog.admin.service.IUserService;
+import com.immyc.blog.common.constants.MyConstants;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -24,6 +28,7 @@ import java.util.List;
  * @Date: 2019/01/06 10:56
  */
 public class BlogRealm extends AuthorizingRealm {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BlogRealm.class);
 
     @Autowired
     private IUserRoleService userRoleService;
@@ -48,24 +53,29 @@ public class BlogRealm extends AuthorizingRealm {
         User user = (User) principalCollection.getPrimaryPrincipal();
         if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            List<Role> roles = userRoleService.findUserRolesById(user.getId());
+            List<Role> roles = userRoleService.findUserRolesByUserId(user.getId());
             if (roles.isEmpty()) {
-                System.out.println(user.getUserName()+"没有任何权限");
+                LOGGER.info(user.getUserName()+"没有任何权限");
                 return null;
             }
             List<String> roleStr = new ArrayList<>(roles.size());
+            List<Permission> permissionList = new ArrayList<>(10);
             for (Role role : roles) {
                 roleStr.add(role.getRoleCode());
+                // 权限
+                List<Permission> permissions = rolePermissionService.findRolePermissionByRoleId(role.getId());
+                if (!permissions.isEmpty()) {
+                    permissionList.addAll(permissions);
+                }
             }
             info.addRoles(roleStr);// 用户的角色
-            // 权限
-            List<Permission> permissions = rolePermissionService.findRolePermissionByRoleId(user.getId());
-            if (permissions.isEmpty()) {
-                System.out.println(user.getUserName()+"没有任何权限");
+
+            if (permissionList.isEmpty()) {
+                LOGGER.info(user.getUserName()+"没有任何权限");
                 return null;
             }
-            List<String> permStr = new ArrayList<>(permissions.size());
-            for (Permission perm : permissions) {
+            List<String> permStr = new ArrayList<>(permissionList.size());
+            for (Permission perm : permissionList) {
                 permStr.add(perm.getPermCode());
             }
             info.addStringPermissions(permStr);
@@ -85,9 +95,15 @@ public class BlogRealm extends AuthorizingRealm {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
         User user = userService.getByLoginName(usernamePasswordToken.getUsername());
         if (user == null) {
+<<<<<<< HEAD
+=======
+            LOGGER.debug("未获取到人员信息");
+>>>>>>> ccaa2161b8d7627f87820755cd018165cc1c217a
             return null;
         }
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getLoginAccount(), user.getPwd(), getName());
+        info.setCredentialsSalt(ByteSource.Util.bytes(user.getSalt()));
+        SecurityUtils.getSubject().getSession().setAttribute(MyConstants.SESSION_USER_INFO, user);
         return info;
     }
 }

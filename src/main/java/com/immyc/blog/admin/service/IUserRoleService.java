@@ -15,10 +15,10 @@ public interface IUserRoleService {
 
     /**
      * 根据用户ID获取用户角色
-     * @param id
+     * @param userId
      * @return
      */
-    List<Role> findUserRolesById(Long id);
+    List<Role> findUserRolesByUserId(Long userId);
 
     /**
      * 批量给用户授予角色

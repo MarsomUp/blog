@@ -1,8 +1,4 @@
-package com.immyc.blog.common.shiro;/**
- * @Description:
- * @Author:mayc
- * @Date:2019/1/10 23:28
- */
+package com.immyc.blog.common.shiro;
 
 import com.immyc.blog.common.util.PwdUtil;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -23,26 +19,27 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    @Bean
+    @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         Map<String, String> filterChainDefinitionMap = new HashMap<String, String>();
-        shiroFilterFactoryBean.setLoginUrl("/login");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/unauthc");
-        shiroFilterFactoryBean.setSuccessUrl("/home/index");
+        shiroFilterFactoryBean.setLoginUrl("/login/do");
+        //shiroFilterFactoryBean.setUnauthorizedUrl("/unauthc");
+        //shiroFilterFactoryBean.setSuccessUrl("/home/index");
 
-        filterChainDefinitionMap.put("/*", "anon");
-        filterChainDefinitionMap.put("/authc/index", "authc");
-        filterChainDefinitionMap.put("/authc/admin", "roles[admin]");
-        filterChainDefinitionMap.put("/authc/renewable", "perms[Create,Update]");
-        filterChainDefinitionMap.put("/authc/removable", "perms[Delete]");
+        filterChainDefinitionMap.put("/", "anon");
+        filterChainDefinitionMap.put("/static/**", "anon");
+        filterChainDefinitionMap.put("/login/auth", "anon");
+        filterChainDefinitionMap.put("/login/logout", "anon");
+        filterChainDefinitionMap.put("/error", "anon");
+        filterChainDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
 
-    @Bean
+    @Bean(name = "credentialsMatcher")
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         hashedCredentialsMatcher.setHashAlgorithmName(PwdUtil.ALGORITHM_NAME); // 散列算法
@@ -51,7 +48,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public BlogRealm shiroRealm() {
+    public BlogRealm blogRealm() {
         BlogRealm blogRealm = new BlogRealm();
         blogRealm.setCredentialsMatcher(hashedCredentialsMatcher()); // 原来在这里
         return blogRealm;
@@ -60,7 +57,7 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(shiroRealm());
+        securityManager.setRealm(blogRealm());
         return securityManager;
     }
 

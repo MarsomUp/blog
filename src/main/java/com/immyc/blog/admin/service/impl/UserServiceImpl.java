@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -46,7 +48,8 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User getByLoginName(String loginName) {
-        return this.userMapper.getByLoginName(loginName);
+        User user = this.userMapper.getByLoginName(loginName);
+        return user;
     }
 
     @Override
@@ -63,6 +66,12 @@ public class UserServiceImpl implements IUserService {
         return this.userMapper.getById(id);
     }
 
+    @Override
+    public List<User> findAllUser(Map<String, Object> param) {
+        Map<String, Object> params = new HashMap(7);
+
+        return this.userMapper.selectAll(param);
+    }
 
 
 }

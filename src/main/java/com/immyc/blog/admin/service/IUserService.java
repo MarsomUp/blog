@@ -2,6 +2,9 @@ package com.immyc.blog.admin.service;
 
 import com.immyc.blog.admin.model.User;
 
+import java.util.List;
+import java.util.Map;
+
 public interface IUserService {
 
     /**
@@ -37,6 +40,13 @@ public interface IUserService {
      * @return
      */
     User getById(Long id);
+
+    /**
+     * 获取所有用户
+     * @param param
+     * @return
+     */
+    List<User> findAllUser(Map<String, Object> param);
 
 
 }
