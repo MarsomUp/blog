@@ -1,8 +1,4 @@
-package com.immyc.blog.common.util;/**
- * @Description:
- * @Author:mayc
- * @Date:2019/1/10 23:21
- */
+package com.immyc.blog.common.util;
 
 import com.immyc.blog.admin.model.User;
 import org.apache.shiro.crypto.RandomNumberGenerator;

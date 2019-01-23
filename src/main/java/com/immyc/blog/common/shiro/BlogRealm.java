@@ -84,9 +84,8 @@ public class BlogRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
         User user = userService.getByLoginName(usernamePasswordToken.getUsername());
-        if (user != null) {
+        if (user == null) {
             return null;
-
         }
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getLoginAccount(), user.getPwd(), getName());
         return info;
