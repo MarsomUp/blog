@@ -40,6 +40,13 @@ public interface IUserRoleService {
     void addRoleToUser(Long userId, Long[] roleIds);
 
     /**
+     * 给用户授予角色
+     * @param userId
+     * @param roleIds
+     */
+    void addRoleToUser(Long userId, String roleIds);
+
+    /**
      * 根据角色获取角色权限关系表数据
      * @param roleId
      * @return

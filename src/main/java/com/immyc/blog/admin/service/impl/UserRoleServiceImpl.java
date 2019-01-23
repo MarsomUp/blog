@@ -6,6 +6,7 @@ import com.immyc.blog.admin.model.UserRole;
 import com.immyc.blog.admin.service.IUserRoleService;
 import com.immyc.blog.common.IdGen;
 import com.immyc.blog.common.exception.BusinessException;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,16 @@ public class UserRoleServiceImpl implements IUserRoleService {
             roles.add(userRole);
         }
         addUserRolePatch(roles);
+    }
+
+    @Override
+    public void addRoleToUser(Long userId, String roleIds) {
+        if (userId == null || StringUtils.isBlank(roleIds)) {
+            throw new BusinessException();
+        }
+        String[] roleIdArr = roleIds.split(",");
+        Long[] rids = Arrays.stream(roleIdArr).map(i -> Long.valueOf(i)).toArray(Long[]::new);
+        this.addRoleToUser(userId, rids);
     }
 
     @Override

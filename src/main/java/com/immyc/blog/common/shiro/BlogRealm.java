@@ -95,10 +95,7 @@ public class BlogRealm extends AuthorizingRealm {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
         User user = userService.getByLoginName(usernamePasswordToken.getUsername());
         if (user == null) {
-<<<<<<< HEAD
-=======
             LOGGER.debug("未获取到人员信息");
->>>>>>> ccaa2161b8d7627f87820755cd018165cc1c217a
             return null;
         }
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getLoginAccount(), user.getPwd(), getName());
