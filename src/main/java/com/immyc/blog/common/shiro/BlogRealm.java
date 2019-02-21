@@ -50,7 +50,9 @@ public class BlogRealm extends AuthorizingRealm {
             SecurityUtils.getSubject().logout();
             return null;
         }
-        User user = (User) principalCollection.getPrimaryPrincipal();
+        String userName = (String) principalCollection.getPrimaryPrincipal();
+
+        User user = userService.getByLoginName(userName);
         if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             List<Role> roles = userRoleService.findUserRolesByUserId(user.getId());

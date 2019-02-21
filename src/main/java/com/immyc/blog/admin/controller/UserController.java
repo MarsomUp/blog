@@ -3,7 +3,9 @@ package com.immyc.blog.admin.controller;
 import com.immyc.blog.admin.model.User;
 import com.immyc.blog.admin.service.IUserService;
 import com.immyc.blog.common.Result;
+import com.immyc.blog.common.constants.MyConstants;
 import com.immyc.blog.common.util.ParamUtil;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,13 @@ public class UserController {
         Map<String, Object> p = (Map) ParamUtil.parseMapToObject(param, HashMap.class);
         List<User> users = this.userService.findAllUser(p);
         return Result.ok(users);
+    }
+
+    @PostMapping("hello")
+    @RequiresPermissions("ZUZHANG:USER_MANAGER")
+    public Result hello() {
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute(MyConstants.CURRENT_USER);
+        return Result.ok(user);
     }
 
 }

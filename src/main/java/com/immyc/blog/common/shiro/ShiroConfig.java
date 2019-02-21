@@ -2,6 +2,7 @@ package com.immyc.blog.common.shiro;
 
 import com.immyc.blog.common.util.PwdUtil;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -29,12 +30,12 @@ public class ShiroConfig {
         //shiroFilterFactoryBean.setUnauthorizedUrl("/unauthc");
         //shiroFilterFactoryBean.setSuccessUrl("/home/index");
 
-        filterChainDefinitionMap.put("/", "anon");
+        /*filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/static/**", "anon");
-        filterChainDefinitionMap.put("/login/auth", "anon");
+        filterChainDefinitionMap.put("/login/do", "anon");
         filterChainDefinitionMap.put("/login/logout", "anon");
         filterChainDefinitionMap.put("/error", "anon");
-        filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/**", "authc");*/
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
@@ -59,6 +60,13 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(blogRealm());
         return securityManager;
+    }
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
     }
 
     @Bean

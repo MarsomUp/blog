@@ -8,4 +8,6 @@ package com.immyc.blog.common.constants;
 public class MyConstants {
 
     public static final String SESSION_USER_INFO = "session_user_info";
+
+    public static final String CURRENT_USER = "current_user";
 }

@@ -4,6 +4,7 @@ import com.immyc.blog.admin.model.User;
 import com.immyc.blog.admin.service.IUserService;
 import com.immyc.blog.common.RedisUtil;
 import com.immyc.blog.common.Result;
+import com.immyc.blog.common.constants.MyConstants;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -50,7 +51,7 @@ public class LoginController {
             LOGGER.error("其他的错误", e);
         }
         User user = userService.getByLoginName(loginName);
-        subject.getSession().setAttribute("CURRENT_USER", user);
+        subject.getSession().setAttribute(MyConstants.CURRENT_USER, user);
         return Result.ok("登陆成功！");
     }
 }
